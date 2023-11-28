@@ -1,7 +1,7 @@
 // 20231125081654
 // https://jsm-challenges.s3.amazonaws.com/frontend-challenge.json
 
-export default [
+export const data = [
     {
       "gender": "female",
       "name": {
@@ -7603,3 +7603,17 @@ export default [
       }
     }
   ]
+
+export let states = [];
+
+data.forEach( member => {
+  
+  if ( !(states.includes(member.location.state)) ) {
+    states.push(member.location.state)
+  }
+
+})
+
+states.sort( ( a, b ) => {
+  return a.localeCompare(b)
+})

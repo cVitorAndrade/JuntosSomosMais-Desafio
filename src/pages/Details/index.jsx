@@ -1,12 +1,13 @@
-import { Footer } from "../../components/Footer"
-import { Header } from "../../components/Header"
-import { Container } from "./style"
+import { Footer } from "../../components/Footer";
+import { Header } from "../../components/Header";
+import { Container } from "./style";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { Member } from "../../components/Member";
-import data from "../../utils/data"
+import { data, states } from "../../utils/data";
 import { useEffect, useState } from "react";
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
+import { InputFilter } from "../../components/InputFilter";
 
 export function Details() {
     const [allViews, setAllViews] = useState(data.map( member => {
@@ -117,7 +118,7 @@ export function Details() {
         setAtualPage(1)
         setStartNumberView(1)
         setEndNumberView(9)
-    }, allViews)
+    }, [allViews])
 
     const filterViewsByState = (event) => {
 
@@ -153,7 +154,15 @@ export function Details() {
             return tmpFilters.includes(view.props.state)
         })
 
-        setAllViews(filteredViews)
+
+        setAllViews( (tmpFilters.length != 0) ? filteredViews : allMembers)
+    }
+
+
+    const [seeMore, setSeeMore] = useState(false);
+    const showMore = (event) => {
+        event.preventDefault()
+        setSeeMore(!seeMore)
     }
 
     return(
@@ -183,32 +192,19 @@ export function Details() {
                 <div className="filter-section">
                     <h2>Por Estado</h2>
 
-                    <ul>
-                        <li>
-                            <input type="checkbox" onChange={filterViewsByState} value="são paulo" name="" id="sp"/>
-                            <label htmlFor="sp">São Paulo</label>
-                        </li>
+                    <div className="wrapper-filters">
+                        <ul className={seeMore ? "see-more" : ""} >
+                            {
+                                states.map( state => {
+                                    return (
+                                        <InputFilter stateName={state} onChange={filterViewsByState} key={state}/>
+                                    )
+                                })
+                            }
+                        </ul>
+                        <a onClick={showMore}>{seeMore ? "Ver Menos" : "Ver Mais"}</a>
+                    </div>
 
-                        <li>
-                            <input type="checkbox" onChange={filterViewsByState} value="rio de janeiro" name="" id="rj"/>
-                            <label htmlFor="rj">Rio de Janeiro</label>
-                        </li>
-
-                        <li>
-                            <input type="checkbox" value="minas gerais" onChange={filterViewsByState} name="" id="mg"/>
-                            <label htmlFor="mg">Minas Gerais</label>
-                        </li>
-
-                        <li>
-                            <input type="checkbox" onChange={filterViewsByState} value="espírito santo" name="" id="es"/>
-                            <label htmlFor="es">Espírito Santo</label>
-                        </li>
-
-                        <li>
-                            <input type="checkbox" onChange={filterViewsByState} name="" value="bahia" id="ba"/>
-                            <label htmlFor="ba">Bahia</label>
-                        </li>
-                    </ul>
                 </div>
 
                 <div className="order-section">

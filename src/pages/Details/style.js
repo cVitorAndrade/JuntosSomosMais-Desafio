@@ -37,7 +37,7 @@ export const Container = styled.div`
         display: grid;
 
         grid-template-columns: 40.4rem 98rem;
-        grid-template-rows: 6rem 103.8rem;
+        grid-template-rows: 6rem 106rem;
 
         grid-template-areas: "filter-section order-section" "filter-section members-section";
 
@@ -45,39 +45,37 @@ export const Container = styled.div`
 
         .filter-section {
             grid-area: filter-section;
-            max-height: 47.4rem;
             border-radius: .4rem;
             border: 1px solid #E5E5E5;
-
+            
             padding: 2.4rem 2.7rem 0;
             display: flex;
             flex-direction: column;
             gap: 2rem;
-
+            
             ul {
                 display: flex;
                 flex-direction: column;
                 gap: 1rem;
+                max-height: 23rem;
+                overflow-y: hidden;
+                transition: max-height 1s;
+                margin-bottom: 1rem;
 
-                li {
-                    display: flex;
-                    align-items: center;
-                    gap: .8rem;
-                    
+            }
 
-                    label {
-                        color: #222D39;
-                        font-weight: 400;
-                        font-size: 1.6rem;
-                        line-height: 2.8rem;
+            ul.see-more {
+                max-height: 100%;
+            }
 
-                    }
+            a {
+                color: #222D39;
+                cursor: pointer;
+                text-decoration: underline;
+            }
 
-                    label,
-                    input {
-                        cursor: pointer;
-                    }
-                }
+            a:hover {
+                filter: brightness(0.9);
             }
         }
 
@@ -167,6 +165,18 @@ export const Container = styled.div`
                 background-color: transparent;
                 transition: all 1s;
 
+            }
+
+            .MuiPaginationItem-previousNext {
+                background-color: #4A4A4A;
+                color: #FFF;
+                font-size: 3rem;
+                height: 3rem;
+                width: 3rem;
+            }
+
+            .MuiSvgIcon-root {
+                font-size: large;
             }
 
         }
