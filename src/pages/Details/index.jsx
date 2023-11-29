@@ -66,11 +66,11 @@ export function Details() {
         setEndNumberView(endNumber)
     }
 
+    const [ascendingOrder, setAscendingOrder] = useState(false);
     function sortMembers(event) {
         let sortedViews = [...views]
+        let sortedAllViews = [...allViews]
         let icon;
-
-        console.log(atualPage);
 
         if ( event.target.tagName == "BUTTON" ) {
             icon = event.target.querySelector("svg");
@@ -79,27 +79,26 @@ export function Details() {
         }
         
         icon.classList.toggle("sorted")
-        if ( icon.classList.contains("sorted") ) {
-
-            sortedViews.sort((a, b) => {
-                const firstNameA = a.props.firstName;
+        if ( !ascendingOrder ) {
+            sortedAllViews.sort((a, b) => {
+                const firstNameA = a.props.firstName
                 const firstNameB = b.props.firstName;
               
                 return firstNameB.localeCompare(firstNameA);
-            });
+            })
+
+        } else {
+            sortedAllViews.sort((a, b) => {
+                const firstNameA = a.props.firstName
+                const firstNameB = b.props.firstName;
+              
+                return firstNameA.localeCompare(firstNameB);
+            })   
         }
-        
 
-        sortedViews.sort((a, b) => {
-            const firstNameA = a.props.firstName;
-            const firstNameB = b.props.firstName;
-          
-            return firstNameB.localeCompare(firstNameA);
-        });
-
-        setViews(sortedViews)
-        
-    }
+        setAscendingOrder(!ascendingOrder)
+        setAllViews(sortedAllViews)
+}
 
     const [filters, setFilters] = useState([])
 
