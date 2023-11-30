@@ -68,7 +68,6 @@ export function Details() {
 
     const [ascendingOrder, setAscendingOrder] = useState(false);
     function sortMembers(event) {
-        let sortedViews = [...views]
         let sortedAllViews = [...allViews]
         let icon;
 
@@ -151,12 +150,21 @@ export function Details() {
 
         const filteredViews = allMembers.filter( view => {
             return tmpFilters.includes(view.props.state)
-        })
+        }).sort((a, b) => {
 
+            if ( ascendingOrder ) {
+                const firstNameA = a.props.firstName;
+                const firstNameB = b.props.firstName;
+                return firstNameB.localeCompare(firstNameA);
+            } else {
+                const firstNameA = a.props.firstName;
+                const firstNameB = b.props.firstName;
+                return firstNameA.localeCompare(firstNameB);
+            }
+        })
 
         setAllViews( (tmpFilters.length != 0) ? filteredViews : allMembers)
     }
-
 
     const [seeMore, setSeeMore] = useState(false);
     const showMore = (event) => {
